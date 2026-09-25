@@ -5,9 +5,19 @@ from scrapper import fetch_website_content
 
 load_dotenv()
 
-api_key = os.environ.get("OPENROUTER_API_KEY")
-base_url = os.environ.get("OPENROUTER_BASE_URL")
-model = os.environ.get("OPENROUTER_MODEL")
+# mode to run, can be one of these
+# ollama - for local llm
+# openrouter - for frontier models through openrouter
+
+run_mode = "ollama"
+
+api_key = os.environ.get("OPENROUTER_API_KEY") if run_mode == "openrouter" else "dummy"
+base_url = (
+    os.environ.get("OPENROUTER_BASE_URL")
+    if run_mode == "openrouter"
+    else "http://localhost:11434/v1"
+)
+model = os.environ.get("OPENROUTER_MODEL") if run_mode == "openrouter" else "llama3.2"
 
 client = OpenAI(base_url=base_url, api_key=api_key)
 
