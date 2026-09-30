@@ -1,7 +1,7 @@
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
-from scrapper import fetch_website_content
+from ai_projects.scrapper import fetch_website_content
 
 load_dotenv()
 
@@ -9,6 +9,7 @@ load_dotenv()
 # ollama - for local llm
 # openrouter - for frontier models through openrouter
 
+# run_mode = "openrouter"
 run_mode = "ollama"
 
 api_key = os.environ.get("OPENROUTER_API_KEY") if run_mode == "openrouter" else "dummy"

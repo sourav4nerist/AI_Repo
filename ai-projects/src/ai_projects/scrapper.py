@@ -12,16 +12,19 @@ def fetch_website_content(url):
     Return the title and content of the website at the given url.
     Truncate to 2000 characters as asensible limit.
     """
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.content, "html.parser")
-    title = soup.title.string if soup.title else "No title found"
-    if soup.body:
-        for irrelavant in soup.body(["scripts", "style", "img", "input"]):
-            irrelavant.decompose()
-        text = soup.body.get_text(separator="\n", strip=True)
-    else:
-        text = ""
-    return (title + "\n\n" + text)[:2000]
+    try:
+        response = requests.get(url, headers=headers)
+        soup = BeautifulSoup(response.content, "html.parser")
+        title = soup.title.string if soup.title else "No title found"
+        if soup.body:
+            for irrelavant in soup.body(["scripts", "style", "img", "input"]):
+                irrelavant.decompose()
+            text = soup.body.get_text(separator="\n", strip=True)
+        else:
+            text = ""
+        return (title + "\n\n" + text)[:2000]
+    except:
+        return f"URL: {url} is not accessible!!"
 
 
 def fetch_website_links(url):
